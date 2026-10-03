@@ -65,6 +65,22 @@ namespace Library_Management
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            Books book = libDB.Books.Find(selectedId);
+
+            book.Title = txtTitle.Text;
+            book.Author = txtAuthor.Text;
+            book.Publisher = txtPublisher.Text;
+            book.Edition = txtEdition.Text;
+            book.Year = txtYear.Text;
+            book.Price = txtPrice.Text;
+            book.Genre = txtGenre.Text;
+            book.Tags = txtTags.Text;
+            book.Pages = txtPages.Text;
+            book.Language = txtLang.Text;
+
+            libDB.SaveChanges();
+
+            listele();
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
