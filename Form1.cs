@@ -85,7 +85,35 @@ namespace Library_Management
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            List<Books> books = new List<Books> { };
 
+            foreach (var book in libDB.Books)
+            {
+                if (
+                    book.Title == txtTitle.Text ||
+                    book.Author == txtAuthor.Text ||
+                    book.Publisher == txtPublisher.Text ||
+                    book.Edition == txtEdition.Text ||
+                    book.Year == txtYear.Text ||
+                    book.Price == txtPrice.Text ||
+                    book.Genre == txtGenre.Text ||
+                    book.Tags == txtTags.Text ||
+                    book.Pages == txtPages.Text ||
+                    book.Language == txtLang.Text
+                )
+                {
+                    books.Add(book);
+                }
+            }
+
+            if (books.Count > 0)
+            {
+                dataGridView1.DataSource = books;
+            }
+            else
+            {
+                listele();
+            }
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
