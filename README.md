@@ -48,4 +48,4 @@ Update the `LibraryDBEntities` connection string in `App.config` to use the SQL 
 
 ## User interface
 
-The main form is laid out with fields for book title, author, publisher, edition, year, price, genre, tags, page count, and language, along with a book grid and Add, Delete, Update, and Search controls. The Add, Delete, Update, and Search event handlers are currently placeholders.
+The main form is laid out with fields for book title, author, publisher, edition, year, price, genre, tags, page count, and language, along with a book grid and Add, Delete, Update, and Search controls.
