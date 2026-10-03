@@ -25,6 +25,7 @@ namespace Library_Management
         }
 
         LibraryDBEntities libDB = new LibraryDBEntities();
+        int selectedId;
 
         void listele()
         {
@@ -55,7 +56,11 @@ namespace Library_Management
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
+            Books book = libDB.Books.Find(selectedId);
+            libDB.Books.Remove(book);
+            libDB.SaveChanges();
 
+            listele();
         }
 
         private void btnUpdate_Click(object sender, EventArgs e)
@@ -69,7 +74,20 @@ namespace Library_Management
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            selectedId = int.Parse(dataGridView1.CurrentRow.Cells[0].Value.ToString());
 
+            Books book = libDB.Books.Find(selectedId);
+
+            txtTitle.Text = book.Title;
+            txtAuthor.Text = book.Author;
+            txtPublisher.Text = book.Publisher;
+            txtEdition.Text = book.Edition;
+            txtYear.Text = book.Year;
+            txtPrice.Text = book.Price;
+            txtGenre.Text = book.Genre;
+            txtTags.Text = book.Tags;
+            txtPages.Text = book.Pages;
+            txtLang.Text = book.Language;
         }
     }
 }
