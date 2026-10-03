@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
@@ -85,35 +86,46 @@ namespace Library_Management
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            List<Books> books = new List<Books> { };
+            string sql = @"
+                SELECT * FROM Books
+                WHERE Title LIKE @title
+                AND Author LIKE @author
+                AND Publisher LIKE @publisher
+                AND Edition LIKE @edition
+                AND Year LIKE @year
+                AND Price LIKE @price
+                AND Genre LIKE @genre
+                AND Tags LIKE @tags
+                AND Pages LIKE @pages
+                AND Language LIKE @language
+            ";
 
-            foreach (var book in libDB.Books)
-            {
-                if (
-                    book.Title == txtTitle.Text ||
-                    book.Author == txtAuthor.Text ||
-                    book.Publisher == txtPublisher.Text ||
-                    book.Edition == txtEdition.Text ||
-                    book.Year == txtYear.Text ||
-                    book.Price == txtPrice.Text ||
-                    book.Genre == txtGenre.Text ||
-                    book.Tags == txtTags.Text ||
-                    book.Pages == txtPages.Text ||
-                    book.Language == txtLang.Text
-                )
-                {
-                    books.Add(book);
-                }
-            }
+            string title = $"%{txtTitle.Text}%";
+            string author = $"%{txtAuthor.Text}%";
+            string publisher = $"%{txtPublisher.Text}%";
+            string edition = $"%{txtEdition.Text}%";
+            string year = $"%{txtYear.Text}%";
+            string price = $"%{txtPrice.Text}%";
+            string genre = $"%{txtGenre.Text}%";
+            string tags = $"%{txtTags.Text}%";
+            string pages = $"%{txtPages.Text}%";
+            string language = $"%{txtLang.Text}%";
 
-            if (books.Count > 0)
-            {
-                dataGridView1.DataSource = books;
-            }
-            else
-            {
-                listele();
-            }
+            var res = libDB.Books.SqlQuery(
+                sql,
+                new SqlParameter("@title", title),
+                new SqlParameter("@author", author),
+                new SqlParameter("@publisher", publisher),
+                new SqlParameter("@edition", edition),
+                new SqlParameter("@year", year),
+                new SqlParameter("@price", price),
+                new SqlParameter("@genre", genre),
+                new SqlParameter("@tags", tags),
+                new SqlParameter("@pages", pages),
+                new SqlParameter("@language", language)
+            );
+
+            dataGridView1.DataSource = res.ToList();
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
