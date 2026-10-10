@@ -12,28 +12,18 @@ namespace Library_Management
     using System;
     using System.Collections.Generic;
     
-    public partial class Books
+    public partial class Genres
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Books()
+        public Genres()
         {
-            this.Authors = new HashSet<Authors>();
+            this.Books = new HashSet<Books>();
         }
     
-        public int Id { get; set; }
-        public string Title { get; set; }
-        public Nullable<int> PublisherId { get; set; }
-        public Nullable<int> GenreId { get; set; }
-        public string Edition { get; set; }
-        public Nullable<int> Year { get; set; }
-        public Nullable<decimal> Price { get; set; }
-        public string Tags { get; set; }
-        public Nullable<int> Pages { get; set; }
-        public string Language { get; set; }
+        public int GenreId { get; set; }
+        public string GenreName { get; set; }
     
-        public virtual Genres Genres { get; set; }
-        public virtual Publishers Publishers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Authors> Authors { get; set; }
+        public virtual ICollection<Books> Books { get; set; }
     }
 }
