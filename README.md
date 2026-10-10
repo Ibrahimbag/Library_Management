@@ -21,23 +21,47 @@ GO
 USE LibraryDB;
 GO
 
-CREATE TABLE dbo.Books
-(
-    Id        int IDENTITY(1,1) PRIMARY KEY,
-    Title     varchar(50),
-    Author    varchar(50),
-    Publisher varchar(50),
-    Edition   varchar(50),
-    Year      varchar(50),
-    Price     varchar(50),
-    Genre     varchar(50),
-    Tags      varchar(200),
-    Pages     varchar(50),
-    Language  varchar(50)
+-- 1. Publishers Table
+CREATE TABLE Publishers (
+    PublisherId INT IDENTITY(1,1) PRIMARY KEY,
+    PublisherName NVARCHAR(255) NOT NULL
+);
+
+-- 2. Authors Table
+CREATE TABLE Authors (
+    AuthorId INT IDENTITY(1,1) PRIMARY KEY,
+    authorName NVARCHAR(100) NOT NULL,
+);
+
+-- 3. Genres Table (Recommended to separate)
+CREATE TABLE Genres (
+    GenreId INT IDENTITY(1,1) PRIMARY KEY,
+    GenreName NVARCHAR(100) NOT NULL
+);
+
+-- 4. Books Table
+CREATE TABLE Books (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Title NVARCHAR(255) NOT NULL,
+    PublisherId INT FOREIGN KEY REFERENCES Publishers(PublisherId),
+    GenreId INT FOREIGN KEY REFERENCES Genres(GenreId),
+    Edition NVARCHAR(50),
+    Year INT,
+    Price DECIMAL(10,2),
+    Tags NVARCHAR(MAX), -- Can store comma-separated tags or use a separate Tag table later
+    Pages INT,
+    Language NVARCHAR(50)
+);
+
+-- 5. Junction Table for Books and Authors (Many-to-Many relationship)
+CREATE TABLE BookAuthors (
+    BookId INT FOREIGN KEY REFERENCES Books(Id) ON DELETE CASCADE,
+    AuthorId INT FOREIGN KEY REFERENCES Authors(AuthorId) ON DELETE CASCADE,
+    PRIMARY KEY (BookId, AuthorId)
 );
 ```
 
-Update the `LibraryDBEntities` connection string in `App.config` to use the SQL Server instance available on your machine. The checked-in configuration currently points to `DESKTOP-2FRKVQK\SQLEXPRESS` and uses Windows Integrated Security.
+Update the `LibraryDBEntities1` connection string in `App.config` to use the SQL Server instance available on your machine. The checked-in configuration currently points to `DESKTOP-2FRKVQK\SQLEXPRESS` and uses Windows Integrated Security.
 
 ## Build and run
 
